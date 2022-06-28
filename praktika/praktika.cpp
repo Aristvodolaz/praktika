@@ -4,5 +4,9 @@
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    int n;
+    
+    std::cout << "Введите число >> " << std::endl;
+    std::cin >> n;
+    std::cout << "Ваше число >> " << n << std::endl;
 }
