@@ -255,4 +255,242 @@ void main() {
 			}
 
 		}
-	
+
+		c = 0;
+		b = 0;
+
+		cout << endl;
+
+		cout << "COVERED COLOUMNS" << endl;
+		for (i = 0; i < bi; i++) {
+			if (RyadFour[i] > -1) {
+				cout << RyadFour[i] << "\t";
+				SizeSchet++;
+			}
+		}
+		cout << endl;
+		cout << endl;
+		cout << "COVERED ROWS" << endl;
+		for (i = 0; i < ci; i++) {
+			if (RyadFive[i] > -1) {
+				cout << RyadFive[i] << "\t";
+				SizeSchetTwo++;
+			}
+		}
+		cout << endl;
+		cout << endl;
+
+
+		cout << "UNCOVERED" << endl;
+		for (i = 0; i < SIZE; i++) {
+			for (j = 0; j < SIZE; j++) {
+				if (RyadThree[i][j] > -1)
+					cout << RyadThree[i][j] << "\t";
+				else
+					cout << "-" << "\t";
+			}
+			cout << endl;
+		}
+
+		for (i = 0; i < SIZE; i++) {
+			for (j = 0; j < SIZE; j++) {
+
+				if (RyadThree[i][j] > -1) {
+					min = RyadThree[i][j];
+					break;
+				}
+			}
+		}
+
+
+		for (i = 0; i < SIZE; i++) {
+			for (j = 0; j < SIZE; j++) {
+
+				if (RyadThree[i][j] > -1) {
+					if (min > RyadThree[i][j])
+						min = RyadThree[i][j];
+				}
+			}
+
+		}
+		cout << endl;
+		cout << endl;
+		if (min != 0)
+			cout << "-----> MIN= " << min;
+		else
+			cout << "-----> MIN= NOT FOUND";
+		cout << endl;
+
+		cout << endl;
+
+		for (i = 0; i < SIZE; i++) {
+			for (j = 0; j < SIZE; j++) {
+
+				SchetOne = 0;
+				for (k = 0; k < bi; k++) {
+
+					if (RyadFour[k] == j)
+						SchetOne++;
+
+				}
+
+				SchetTwo = 0;
+				for (z = 0; z < ci; z++) {
+
+					if (RyadFive[z] == i)
+						SchetTwo++;
+
+				}
+
+				if (SchetOne == 0 && SchetTwo == 0 && RyadTwo[i][j] != 0) {
+					RyadTwo[i][j] = RyadTwo[i][j] - min;
+				}
+				else if (SchetOne != 0 && SchetTwo != 0) {
+					RyadTwo[i][j] = RyadTwo[i][j] + min;
+				}
+
+			}
+
+		}
+
+
+		for (i = 0; i < SIZE; i++) {
+			for (j = 0; j < SIZE; j++) {
+
+				cout << RyadTwo[i][j] << "\t";
+			}
+			cout << endl;
+		}
+		cout << "---------------------------------------------------------------------------" << endl;
+		q = SizeSchet + SizeSchetTwo;
+		if (q >= SIZE) {
+			break;
+		}
+	}
+	cout << endl;
+	cout << endl;
+
+	for (i = 0; i < SIZE; i++) {
+		for (j = 0; j < SIZE; j++) {
+			Ryad[i][j] = RyadTwo[i][j];
+		}
+	}
+	c = 0;
+	b = 0;
+
+
+	for (t = 0; t < SIZE * SIZE; t++) {
+		for (i = 0; i < SIZE; i++) {
+
+			for (j = 0; j < SIZE; j++) {
+				saya = 0;
+				for (z = 0; z < SIZE; z++) {
+					if (RyadTwo[i][z] == 0) {
+						saya++;
+					}
+				}
+				if (saya == 1) {
+					for (z = 0; z < SIZE; z++) {
+						if (RyadTwo[i][z] == 0) {
+							sum = sum + RyadOne[i][z];
+							cout << "WORKER " << i << "  JOB " << z << " ------> Value is= " << RyadOne[i][z] << endl;
+
+							b++;
+							tem = z;
+						}
+					}
+					for (z = 0; z < SIZE; z++) {
+
+						RyadTwo[z][tem] = -100;
+						RyadTwo[i][z] = -100;
+					}
+				}
+			}
+
+			for (j = 0; j < SIZE; j++) {
+				saya2 = 0;
+				for (z = 0; z < SIZE; z++) {
+					if (RyadTwo[z][i] == 0) {
+						saya2++;
+					}
+				}
+				if (saya2 == 1) {
+					for (z = 0; z < SIZE; z++) {
+						if (RyadTwo[z][i] == 0) {
+							sum = sum + RyadOne[z][i];
+							cout << "WORKER " << z << "  JOB " << i << " ------> Value is= " << RyadOne[z][i] << endl;
+
+							c++;
+							tem = z;
+						}
+					}
+
+					for (z = 0; z < SIZE; z++) {
+
+						RyadTwo[tem][z] = -100;
+						RyadTwo[z][i] = -100;
+
+					}
+				}
+
+			}
+
+			if (t > SIZE) {
+				if (saya > 1 && saya2 > 1) {
+
+					for (z = 0; z < SIZE; z++) {
+						if (RyadTwo[i][z] == 0) {
+							sum = sum + RyadOne[i][z];
+							cout << "WORKER " << i << "  J " << z << " ------> Value is= " << RyadOne[i][z] << endl;
+							tem = z;
+							break;
+						}
+					}
+
+					for (z = 0; z < SIZE; z++) {
+
+						RyadTwo[i][z] = -100;
+						RyadTwo[z][tem] = -100;
+
+					}
+
+				}
+
+			}
+		}
+	}
+
+	for (i = 0; i < SIZE; i++) {
+
+		for (j = 0; j < SIZE; j++) {
+
+			if (Ryad[i][j] == 0)
+				Ryad[i][j] = RyadOne[i][j];
+
+		}
+	}
+
+	cout << endl;
+	cout << endl;
+
+
+	cout << "LAST ARRAY" << endl;
+	cout << endl;
+	for (i = 0; i < SIZE; i++) {
+		for (j = 0; j < SIZE; j++) {
+
+			cout << Ryad[i][j] << "\t";
+
+		}
+		cout << endl;
+	}
+
+	cout << endl;
+	cout << endl;
+
+	cout << "-----> SUM= " << sum << endl;
+	cout << endl;
+
+	system("pause");
+	return 0;
+}
